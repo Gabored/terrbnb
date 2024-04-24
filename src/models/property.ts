@@ -42,4 +42,4 @@ propertySchema.statics.deleteProperty = async function (propertyId: string): Pro
   return this.findByIdAndDelete(propertyId);
 };
 
-export const PropertyModel: PropertyModel = model<Property, PropertyModel>('Property', propertySchema);
+export const PropertyModel: PropertyModel = model<Property, PropertyModel>('Property' , propertySchema, "property");
