@@ -43,4 +43,4 @@ chatMessageSchema.statics.deleteChatMessage = async function (chatMessageId: str
   return this.findByIdAndDelete(chatMessageId);
 };
 
-export const ChatMessageModel: ChatMessageModel = model<ChatMessage, ChatMessageModel>('ChatMessage', chatMessageSchema);
+export const ChatMessageModel: ChatMessageModel = model<ChatMessage, ChatMessageModel>('ChatMessage', chatMessageSchema, "chatmessage");

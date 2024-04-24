@@ -47,4 +47,4 @@ userSchema.statics.deleteUser = async function (userId: string): Promise<User | 
   return this.findByIdAndDelete(userId);
 };
 
-export const UserModel: UserModel = model<User, UserModel>('User', userSchema);
+export const UserModel: UserModel = model<User, UserModel>('User', userSchema, "user");

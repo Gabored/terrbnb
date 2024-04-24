@@ -38,4 +38,4 @@ reviewSchema.statics.deleteReview = async function (reviewId: string): Promise<R
   return this.findByIdAndDelete(reviewId);
 };
 
-export const ReviewModel: ReviewModel = model<Review, ReviewModel>('Review', reviewSchema);
+export const ReviewModel: ReviewModel = model<Review, ReviewModel>('Review', reviewSchema, "review");
