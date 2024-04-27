@@ -8,7 +8,8 @@ interface RequestWithUser extends ExpressRequest {
 }
 
 const authMW = (req: RequestWithUser, res: Response, next: NextFunction) => {
-    const token: string | undefined = req.query.token as string;
+    const authHeader = req.headers['authorization'];
+    const token = authHeader && authHeader.split(' ')[1]; // Extract token from Authorization header
     
     if (!token) {
         return res.sendStatus(ResponseStatus.UNAUTHENTICATED);

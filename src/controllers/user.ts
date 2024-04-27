@@ -98,7 +98,7 @@ class UsersController {
       }
 
       // Generate JWT token
-      const token = jwt.sign({ userId: user._id, userName: user.name }, process.env.SECRET_KEY, { expiresIn: '1h' });
+      const token = jwt.sign({ userId: user._id, userName: user.name, role: user.role }, process.env.SECRET_KEY, { expiresIn: '1h' });
 
       res.json({ token });
     } catch (error) {
