@@ -26,7 +26,7 @@ router.get('/protected-route', authMW, (req, res) => {
     // This route is protected and will only be accessible if the user is authenticated
     // Access the authenticated user's information from req.user
     const user = (req as any).user;
-    res.send(`Welcome ${user.username}!`);
+    res.send(`Welcome ${user.userName}!`);
 });
 
 export default router;
