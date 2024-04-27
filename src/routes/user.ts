@@ -9,6 +9,11 @@ router.get('/', UsersController.getUsers);
 // GET user by ID
 router.get('/:id', UsersController.findUserById);
 
+// Create a new user and login route
+router.post('/', UsersController.createUser);
+router.post('/login', UsersController.loginUser);
+
+
 // UPDATE user by ID
 router.put('/:id', UsersController.updateUser);
 

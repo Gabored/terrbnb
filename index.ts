@@ -12,6 +12,10 @@ dotenv.config();
 
 const app = express();
 
+app.use(express.json());
+
+app.use(express.urlencoded({ extended: true }));
+
 // Set up a basic route
 app.get('/', (req: Request, res: Response) => {
   res.send('Server is running!');
