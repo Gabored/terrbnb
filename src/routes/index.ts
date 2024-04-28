@@ -29,4 +29,8 @@ router.get('/protected-route', authMW, adminMW, (req, res) => {
     res.send(`Welcome ${user.userName}!`);
 });
 
+router.get('/index', (req, res) => {
+    res.render('index');
+})
+
 export default router;

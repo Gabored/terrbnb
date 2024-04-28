@@ -10,6 +10,8 @@ import jwt from 'jsonwebtoken';
 import { Profile } from 'passport-google-oauth20';
 import { Server } from 'socket.io';
 import http from 'http';
+import { engine } from 'express-handlebars'
+
 
 interface CustomRequest extends Request {
     user: Profile;
@@ -20,6 +22,10 @@ dotenv.config();
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+app.engine('handlebars', engine())
+app.set('view engine', 'handlebars');
+app.set('views', 'src/views');
 
 // Set up a basic route
 app.get('/', (req: Request, res: Response) => {
