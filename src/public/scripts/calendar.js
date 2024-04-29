@@ -2,8 +2,8 @@ document.addEventListener('DOMContentLoaded', async function () {
 
     // const url =  `${process.env.URL}/eventos`;
     // const urlEventos = 'https://administrador-reservas.onrender.com/eventos'
-    const urlEventos = './api/eventos';
-    const urlHabitaciones = './api/habitaciones';
+    const urlEventos = './reservations';
+    const urlHabitaciones = './properties';
 
 
 
@@ -36,13 +36,14 @@ document.addEventListener('DOMContentLoaded', async function () {
                     })
                     .then(function (data) {
                         // console.log(data);
-                        let resources = data[0].resources.map(function (event) {
+                        let resources = data.map(function (event) {
                             return {
-                                id: event.id,
-                                habitaciones: event.habitaciones,
-                                title: event.title
+                                id: event._id.toString(),
+                                // habitaciones: event.habitaciones,
+                                title: event.name
                             }
                         })
+                        console.log(resources);
                         successCallback(resources);
                         // console.log(resources);
                     })
@@ -58,17 +59,19 @@ document.addEventListener('DOMContentLoaded', async function () {
                     })
                     .then(function (data) {
                         // console.log(data);
-                        let events = data[0].events.map(function (event) {
+                        let events = data.map(function (event) {
                             return {
-                                id: event.id,
-                                resourceId: event.resourceId,
-                                title: event.title,
-                                start: new Date(event.start),
-                                end: new Date(event.end),
-                                url: event.url,
-                                total: event.total
+                                id: event._id,
+                                resourceId: event.idProperty.toString(),
+                                // title: event.title,
+                                start: new Date(event.startDate),
+                                end: new Date(event.endDate),
+                                url: "http://localhost:5000",
+                                status: event.status,
+                                idUser: event.idUser
                             }
                         })
+                        console.log(events);
                         successCallback(events);
                         // console.log(events);
                     })
@@ -82,7 +85,7 @@ document.addEventListener('DOMContentLoaded', async function () {
                 html: `
                 <div class="p-1 rounded bg-success bg-gradient" style="overflow: hidden; font-size: 12px; position: relative;  cursor: pointer; font-family: "Overpass", sans-serif;">
                     <div>${info.event.title}</div>
-                    <div><b>Total: $ ${info.event.extendedProps.total}</b></div>
+                    <div><b>Reserva de {name}</b></div>
                 </div>
                 `
             }

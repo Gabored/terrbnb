@@ -33,4 +33,8 @@ router.get('/index', (req, res) => {
     res.render('index');
 })
 
+router.get('/calendar', (req, res) => {
+    res.render('calendar');   
+})
+
 export default router;
