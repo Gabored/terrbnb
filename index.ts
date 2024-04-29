@@ -4,6 +4,7 @@ import mongoose from 'mongoose'; // Import Mongoose
 import routes from './src/routes'; // Import routes
 
 import passport from 'passport';
+import path from 'path'; 
 import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
 import session from 'express-session';
 import jwt from 'jsonwebtoken';
@@ -20,6 +21,8 @@ interface CustomRequest extends Request {
 dotenv.config();
 
 const app = express();
+
+app.use(express.static(path.join(__dirname, 'src', 'public')));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
