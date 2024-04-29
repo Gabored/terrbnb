@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', async function () {
             right: 'resourceTimelineMonth,resourceTimelineYear'
         },
 
-        resourceAreaHeaderContent: 'Habitaciones',
+        resourceAreaHeaderContent: 'Propiedades',
         resourceGroupField: 'habitaciones',
         resources:
             function (info, successCallback, failureCallback) {
