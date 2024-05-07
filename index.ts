@@ -4,12 +4,15 @@ import mongoose from 'mongoose'; // Import Mongoose
 import routes from './src/routes'; // Import routes
 
 import passport from 'passport';
+import path from 'path'; 
 import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
 import session from 'express-session';
 import jwt from 'jsonwebtoken';
 import { Profile } from 'passport-google-oauth20';
 import { Server } from 'socket.io';
 import http from 'http';
+import { engine } from 'express-handlebars'
+
 
 interface CustomRequest extends Request {
     user: Profile;
@@ -18,8 +21,14 @@ interface CustomRequest extends Request {
 dotenv.config();
 
 const app = express();
+
+app.use(express.static(path.join(__dirname, 'src', 'public')));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+app.engine('handlebars', engine())
+app.set('view engine', 'handlebars');
+app.set('views', 'src/views');
 
 // Set up a basic route
 app.get('/', (req: Request, res: Response) => {
