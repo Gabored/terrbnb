@@ -44,4 +44,4 @@ postSchema.statics.deletePost = async function (postId: string): Promise<Post | 
   return this.findByIdAndDelete(postId);
 };
 
-export const PostModel: PostModel = model<Post, PostModel>('Post', postSchema);
+export const PostModel: PostModel = model<Post, PostModel>('Post', postSchema, "post");

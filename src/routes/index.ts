@@ -12,8 +12,8 @@ const router = Router();
 
 // Middlewares
 
-router.use(authMW); 
-router.use(adminMW);
+//router.use(authMW); 
+//router.use(adminMW);
 
 router.use('/users', userRoutes);
 router.use('/properties', propertyRoutes);
@@ -21,5 +21,20 @@ router.use('/chatMessages', chatMessageRoutes);
 router.use('/reservations', reservationRoutes);
 router.use('/reviews', reviewRoutes);
 router.use('/post', postRoutes)
+
+router.get('/protected-route', authMW, adminMW, (req, res) => {
+    // This route is protected and will only be accessible if the user is authenticated
+    // Access the authenticated user's information from req.user
+    const user = (req as any).user;
+    res.send(`Welcome ${user.userName}!`);
+});
+
+router.get('/index', (req, res) => {
+    res.render('index');
+})
+
+router.get('/calendar', (req, res) => {
+    res.render('calendar');   
+})
 
 export default router;

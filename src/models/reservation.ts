@@ -38,4 +38,4 @@ reservationSchema.statics.deleteReservation = async function (reservationId: str
   return this.findByIdAndDelete(reservationId);
 };
 
-export const ReservationModel: ReservationModel = model<Reservation, ReservationModel>('Reservation', reservationSchema);
+export const ReservationModel: ReservationModel = model<Reservation, ReservationModel>('Reservation', reservationSchema, 'reservation');

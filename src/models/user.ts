@@ -1,4 +1,5 @@
 import { Schema, Document, model, Model } from 'mongoose';
+import bcrypt from 'bcrypt';
 
 interface User extends Document {
   _id: Schema.Types.ObjectId;
@@ -7,6 +8,8 @@ interface User extends Document {
   password: string;
   role: 'standard' | 'owner' | 'admin';
   profilePicture?: string;
+  comparePassword(candidatePassword: string): Promise<boolean>;
+
 }
 
 interface UserModel extends Model<User> {
@@ -18,12 +21,12 @@ interface UserModel extends Model<User> {
 }
 
 const userSchema: Schema<User> = new Schema({
-  _id: { type: Schema.Types.ObjectId, required: true },
   name: { type: String, required: true },
   email: { type: String, required: true },
   password: { type: String, required: true },
   role: { type: String, enum: ['standard', 'owner', 'admin'], required: true },
-  profilePicture: { type: String }
+  profilePicture: { type: String },
+
 });
 
 // Static methods for CRUD operations
@@ -47,4 +50,32 @@ userSchema.statics.deleteUser = async function (userId: string): Promise<User | 
   return this.findByIdAndDelete(userId);
 };
 
-export const UserModel: UserModel = model<User, UserModel>('User', userSchema);
+userSchema.methods.comparePassword = async function(candidatePassword: string): Promise<boolean> {
+  try {
+    return await bcrypt.compare(candidatePassword, this.password);
+  } catch (error) {
+    throw new Error(error);
+  }
+};
+
+userSchema.pre<User>('save', async function (next) {
+  // Only hash the password if it's modified (or is new)
+  if (!this.isModified('password')) {
+      return next();
+  }
+
+  try {
+      // Generate a salt
+      const salt = await bcrypt.genSalt(10);
+      // Hash the password with the generated salt
+      const hashedPassword = await bcrypt.hash(this.password, salt);
+      // Replace the plain password with the hashed one
+      this.password = hashedPassword;
+      next();
+  } catch (error) {
+      next(error);
+  }
+});
+
+
+export const UserModel: UserModel = model<User, UserModel>('User', userSchema, "user");

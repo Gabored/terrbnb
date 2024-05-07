@@ -1,9 +1,11 @@
 import { Request, Response } from 'express';
 import { UserModel } from '../models/user';
 import { ResponseStatus } from '../utils/response-status';
+import jwt from 'jsonwebtoken';
+
 
 class UsersController {
-  
+
   async getUsers(req: Request, res: Response): Promise<void> {
     try {
       const users = await UserModel.getAllUsers();
@@ -16,9 +18,14 @@ class UsersController {
 
   async createUser(req: Request, res: Response): Promise<void> {
     try {
+
+      console.log('Request body:', req.body); // Log the request body
+
+      // const { name, email, password, role } = req.body;
+
       const userData = req.body;
       const newUser = await UserModel.createUser(userData);
-      res.send(newUser);
+      res.send({ "userCreated": newUser });
     } catch (error) {
       console.error('Error creating user:', error);
       res.status(ResponseStatus.BAD_REQUEST).send('Failed to create user');
@@ -70,6 +77,37 @@ class UsersController {
       res.status(ResponseStatus.BAD_REQUEST).send('Failed to delete user');
     }
   }
+
+  async loginUser(req: Request, res: Response): Promise<void> {
+    try {
+      const { email, password } = req.body;
+
+      // Check if the user exists
+      const user = await UserModel.findOne({ email });
+
+      if (!user) {
+        res.status(ResponseStatus.UNAUTHENTICATED).send('Invalid credentials');
+      }
+
+      // Verify password
+      const isValidPassword = await user.comparePassword(password);
+
+      if (!isValidPassword) {
+        res.status(ResponseStatus.UNAUTHENTICATED).send('Invalid credentials');
+        return;
+      }
+
+      // Generate JWT token
+      const token = jwt.sign({ userId: user._id, userName: user.name, role: user.role }, process.env.SECRET_KEY, { expiresIn: '1h' });
+
+      res.json({ token });
+    } catch (error) {
+      console.error('Error logging in:', error);
+      res.status(ResponseStatus.INTERNAL_SERVER_ERROR).send('Internal Server Error');
+    }
+  }
 }
+
+
 
 export default new UsersController();
