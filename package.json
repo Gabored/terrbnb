@@ -6,6 +6,7 @@
   "scripts": {
     "start": "node dist/",
     "local": "ts-node src/index.ts",
+    "postinstall" : "npm run build"
     "build": "rimraf dist && tsc",
     "dev": "nodemon index.ts"
   },
