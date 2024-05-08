@@ -1,4 +1,4 @@
-const token  = localStorage.getItem('token');
+const token  = sessionStorage.getItem('token');
 
 document.addEventListener('DOMContentLoaded', async function () {
     const urlPosts = './post';
@@ -13,7 +13,6 @@ document.addEventListener('DOMContentLoaded', async function () {
     });
 
     let posts = await resp.json();
-    console.log(posts);
 
     posts.forEach(post => {
         const card = document.createElement('div');
