@@ -2,9 +2,9 @@
   "name": "terrbnb",
   "version": "1.0.0",
   "description": "web2 proyect",
-  "main": "index.ts",
+  "main": "index.js",
   "scripts": {
-    "start": "node dist/",
+    "start": "node dist/index.js",
     "local": "ts-node src/index.ts",
     "postinstall": "npm run build",
     "build": "rimraf dist && tsc",
