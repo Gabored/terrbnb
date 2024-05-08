@@ -6,6 +6,10 @@ const router = Router();
 // GET all properties
 router.get('/', PostController.getAllPosts);
 
+router.get('/view', (req, res) => {
+    res.render('postsView')
+})
+
 // GET property by ID
 router.get('/:id', PostController.getPostById);
 
