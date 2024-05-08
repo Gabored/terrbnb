@@ -42,6 +42,15 @@ router.get('/calendar', (req, res) => {
     res.render('calendar');
 })
 
+router.get('/posts', (req, res) => {
+    res.render('posts');
+})
+
+router.get('/reserve', (req, res) => {
+    res.render('reserves');
+})
+
+
 router.post('/upload', uploadS3.single('image'), (req, res) => {
     // Verifica si se subió correctamente el archivo
     if (!req.file) {
