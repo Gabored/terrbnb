@@ -50,6 +50,10 @@ router.get('/reserve', (req, res) => {
     res.render('reserves');
 })
 
+router.get('/signup', (req, res) => {
+    res.render('signup', { layout: 'login_layout' });
+})
+
 
 router.post('/upload', uploadS3.single('image'), (req, res) => {
     // Verifica si se subió correctamente el archivo

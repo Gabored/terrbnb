@@ -31,8 +31,8 @@ app.set('view engine', 'handlebars');
 app.set('views', 'src/views');
 
 // Set up a basic route
-app.get('/', (req: Request, res: Response) => {
-    res.send('Server is running!');
+app.get('/', (req, res) => {
+    res.render('login', { layout: 'login_layout' }); 
 });
 
 // Use routes
@@ -95,6 +95,8 @@ passport.use(new GoogleStrategy({
 app.get('/google', passport.authenticate('google', {
     scope: ['profile', 'email']
 }));
+
+
 
 app.get('/logout', (req, res) => {
     // req.logout(); // Passport.js method to clear login session

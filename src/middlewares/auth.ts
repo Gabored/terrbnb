@@ -4,7 +4,7 @@ import { ResponseStatus } from './../utils/response-status';
 
 // Define a new interface extending Express's Request interface
 interface RequestWithUser extends ExpressRequest {
-    user?: any; // You can define the user property as any type or a specific type based on your application's needs
+    user?: any; 
 }
 
 const authMW = (req: RequestWithUser, res: Response, next: NextFunction) => {

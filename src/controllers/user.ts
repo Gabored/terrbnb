@@ -82,8 +82,11 @@ class UsersController {
     try {
       const { email, password } = req.body;
 
+      console.log(req.body)
+
       // Check if the user exists
       const user = await UserModel.findOne({ email });
+      console.log(user)
 
       if (!user) {
         res.status(ResponseStatus.UNAUTHENTICATED).send('Invalid credentials');
