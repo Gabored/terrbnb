@@ -37,4 +37,13 @@ router.get('/calendar', (req, res) => {
     res.render('calendar');   
 })
 
+router.get('/posts', (req, res) => {
+    res.render('posts');
+})
+
+router.get('/reserve', (req, res) => {
+    res.render('reserves');
+})
+
+
 export default router;
