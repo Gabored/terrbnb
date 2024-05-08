@@ -4,7 +4,7 @@
   "description": "web2 proyect",
   "main": "index.js",
   "scripts": {
-    "start": "node dist/index.js",
+    "start": "node dist/.",
     "local": "ts-node src/index.ts",
     "postinstall": "npm run build",
     "build": "rimraf dist && tsc",
