@@ -1,9 +1,9 @@
-const token: string | null = sessionStorage.getItem('token');
+const token: string = sessionStorage.getItem('token');
 
 document.addEventListener('DOMContentLoaded', async () => {
     const urlPosts: string = './post';
 
-    const div_post: HTMLElement | null = document.getElementById('post-container');
+    const div_post: HTMLElement = document.getElementById('post-container');
 
     if (div_post) {
         const resp: Response = await fetch(urlPosts, {
