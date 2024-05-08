@@ -1,4 +1,6 @@
 import { Router } from 'express';
+import { uploadS3 } from './../middlewares/upload-s3';
+
 import userRoutes from './user';
 import propertyRoutes from './property';
 import chatMessageRoutes from './chatMessage';
@@ -9,6 +11,9 @@ import authMW from '../middlewares/auth';
 import adminMW from '../middlewares/admin';
 
 const router = Router();
+interface MulterFileWithLocation extends Express.Multer.File {
+    location: string;
+}
 
 // Middlewares
 
@@ -34,7 +39,23 @@ router.get('/index', (req, res) => {
 })
 
 router.get('/calendar', (req, res) => {
-    res.render('calendar');   
+    res.render('calendar');
 })
+
+router.post('/upload', uploadS3.single('image'), (req, res) => {
+    // Verifica si se subió correctamente el archivo
+    if (!req.file) {
+        return res.status(400).json({ message: 'No se ha subido ningún archivo' });
+    }
+
+    const fileWithLocation = req.file as MulterFileWithLocation;
+    const url = fileWithLocation.location;
+
+    // Obtén la URL pública de la imagen
+    // const imageUrl = `https://${process.env.S3_BUCKET_NAME}.s3.${process.env.S3_BUCKET_REGION}.amazonaws.com/${req.file.key}`;
+
+    // Envía la URL pública como respuesta
+    res.status(200).json({ imageUrl: url });
+});
 
 export default router;
